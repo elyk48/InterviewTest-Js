@@ -1,11 +1,24 @@
 app:
   title: Scaffolded Backstage App
+  #here you can modify the port
   baseUrl: http://localhost:3000
 
 organization:
-  name: My Company
+  name: InterviewTest
 
+    
+
+
+api:
+  backend:
+    # Define your plugin's configuration
+    
+    myBackendPlugin:
+      baseRoute: /testback/yes  
 backend:
+
+#You can change here your Github repo
+  GITHUBAPIURL: https://api.github.com/repos/elyk48/TestRepo/pulls
   # Used for enabling authentication, secret is shared by all backend plugins
   # See https://backstage.io/docs/auth/service-to-service-auth for
   # information on the format
@@ -37,7 +50,7 @@ integrations:
     - host: github.com
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
       # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
-      token: ${GITHUB_TOKEN}
+      token: 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
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
     #   apiBaseUrl: https://ghe.example.net/api/v3

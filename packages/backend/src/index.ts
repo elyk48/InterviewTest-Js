@@ -31,6 +31,7 @@ import search from './plugins/search';
 import { PluginEnvironment } from './types';
 import { ServerPermissionClient } from '@backstage/plugin-permission-node';
 import { DefaultIdentityClient } from '@backstage/plugin-auth-node';
+import testback from "./plugins/testback";
 
 function makeCreateEnv(config: Config) {
   const root = getRootLogger();
@@ -77,7 +78,8 @@ async function main() {
     logger: getRootLogger(),
   });
   const createEnv = makeCreateEnv(config);
-
+  const testbackEnv = useHotMemoize(module, () => createEnv('testback'));
+ 
   const catalogEnv = useHotMemoize(module, () => createEnv('catalog'));
   const scaffolderEnv = useHotMemoize(module, () => createEnv('scaffolder'));
   const authEnv = useHotMemoize(module, () => createEnv('auth'));
@@ -87,6 +89,7 @@ async function main() {
   const appEnv = useHotMemoize(module, () => createEnv('app'));
 
   const apiRouter = Router();
+  apiRouter.use('/testback', await testback(testbackEnv));
   apiRouter.use('/catalog', await catalog(catalogEnv));
   apiRouter.use('/scaffolder', await scaffolder(scaffolderEnv));
   apiRouter.use('/auth', await auth(authEnv));
